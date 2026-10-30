@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rosedel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main id="game">
+
+    <!-- START SCREEN -->
+    <section id="start-screen">
+      <div id="start-card">
+        <h1>Rosedel</h1>
+        <p>please play horizontally babe</p>
+      </div>
+
+      <button id="play-button">Begin</button>
+
+      <img src="assets/flowers-top.png"
+           class="decoration flowers-top" alt="">
+      <img src="assets/flowers-bottom.png"
+           class="decoration flowers-bottom" alt="">
+    </section>
+
+    <!-- GAME SCREEN -->
+    <section id="play-screen" class="hidden">
+
+      <canvas id="world" width="960" height="540"></canvas>
+      <div id="journey-message" class="hidden">
+  <div class="message-title"></div>
+  <div class="message-text"></div>
+      </div>
+
+      <!-- Continuous journey messages: do not pause gameplay -->
+      <div id="journey-message" class="hidden"></div>
+
+      <!-- Interactive conversations: pause gameplay -->
+      <div id="conversation-box" class="hidden">
+        <div id="conversation-speaker"></div>
+        <div id="conversation-text"></div>
+        <button id="dialogue-button">Continue ▶</button>
+      </div>
+
+      <!-- FLOWER COUNTER -->
+      <div id="bouquet-counter">
+        <span class="bouquet-icon">🌸</span>
+        <span id="flower-count">0</span>
+      </div>
+
+      <!-- MOVEMENT CONTROLS -->
+      <div id="controls">
+        <div class="movement-controls">
+          <button id="left" aria-label="Move left">◀</button>
+          <button id="right" aria-label="Move right">▶</button>
+        </div>
+        <button id="jump" aria-label="Jump">↑</button>
+      </div>
+
+    </section>
+
+    <!-- ENDING SCREEN -->
+    <section id="ending-screen" class="hidden">
+      <div id="ending-content">
+        <h1>For You ♡</h1>
+        <p id="ending-message"></p>
+        <p id="ending-signature"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Visual functions and assets -->
+  <script src="visuals.js/visuals.js"></script>
+
+  <!-- Text and conversation systems -->
+  <script src="js/dialogue.js"></script>
+
+  <!-- Main gameplay -->
+  <script src="js/fist.js"></script>
+</body>
+</html>

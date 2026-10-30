@@ -1,0 +1,655 @@
+
+/* ===== GLOBAL ===== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+
+  background: #18201d;
+  color: #fff0f7;
+  font-family: Georgia, serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  color: #fff0f7;
+  border: 1px solid rgba(255, 217, 239, 0.6);
+  border-radius: 12px;
+  background: rgba(100, 100, 100, 0.35);
+  padding: 12px 18px;
+  font-size: 18px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+button:active {
+  filter: brightness(1.35);
+}
+
+#game {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #18201d;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* ===== START SCREEN ===== */
+
+#start-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  isolation: isolate;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+
+  padding: 25px;
+
+  background-color: #343B3D;
+  background-image:
+    radial-gradient(
+      circle at 12% 15%,
+      rgba(184, 119, 145, 0.35),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 30%,
+      rgba(160, 112, 139, 0.25),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 15% 85%,
+      rgba(105, 119, 111, 0.3),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #51434F,
+      #414C48 55%,
+      #293B36
+    );
+}
+
+#start-card {
+  position: relative;
+  z-index: 1;
+
+  width: min(90%, 560px);
+  padding: 45px 25px;
+
+  background: #F5EEE7;
+  border: 3px solid #D99AAF;
+  outline: 2px dashed #A5B6A0;
+  outline-offset: 8px;
+
+  box-shadow: 0 12px 35px #17151C35;
+  text-align: center;
+}
+
+#start-card h1 {
+  margin: 0 0 20px;
+  color: #BF8298;
+
+  font-size: clamp(40px, 8vw, 58px);
+  font-weight: normal;
+  font-style: italic;
+}
+
+#start-card p {
+  margin: 0;
+  color: #493D3B;
+
+  font-size: clamp(16px, 3vw, 21px);
+  line-height: 1.8;
+  text-align: center;
+}
+
+#start-screen button {
+  position: relative;
+  z-index: 1;
+
+  min-width: 180px;
+  padding: 16px 35px;
+
+  background: #C17F99;
+  border: 3px solid #E4AEC0;
+  border-radius: 12px;
+
+  color: #F5EEE7;
+  font-size: 22px;
+
+  box-shadow: 0 5px 15px #17151C30;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+#start-screen button:hover {
+  background: #A96F86;
+  transform: translateY(-2px);
+}
+
+#start-screen button:active {
+  transform: translateY(1px);
+}
+
+#start-screen::before {
+  content: "♡";
+  position: absolute;
+  top: 25px;
+  right: 30px;
+
+  color: #D9A0B2;
+  font-size: 32px;
+  z-index: 1;
+}
+
+#start-screen::after {
+  content: "୨୧  ♡  ୨୧";
+  position: absolute;
+  bottom: 25px;
+
+  color: #A5B6A0;
+  font-size: 24px;
+  letter-spacing: 5px;
+  z-index: 1;
+}
+
+
+/* ===== START SCREEN FLOWER DECORATIONS ===== */
+
+.decoration {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.flowers-top {
+  top: 0;
+  left: 0;
+  width: min(55%, 350px);
+}
+
+.flowers-bottom {
+  bottom: 0;
+  right: 0;
+  width: min(50%, 330px);
+}
+
+
+/* ===== GAME AREA ===== */
+
+#play-screen {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  background: #b9d9c9;
+}
+
+#world {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+
+/* ===== CONTINUOUS JOURNEY MESSAGES ===== */
+
+#journey-message {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 80%;
+  max-width: 600px;
+  padding: 10px 16px;
+
+  color: #fff0f7;
+  font-family: Georgia, serif;
+  font-size: clamp(14px, 2.5vw, 22px);
+
+  text-align: center;
+  line-height: 1.5;
+
+  text-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.8),
+    0 0 12px rgba(255, 182, 223, 0.35);
+
+  background: rgba(36, 49, 42, 0.35);
+  border: 1px solid rgba(255, 217, 239, 0.2);
+  border-radius: 12px;
+
+  opacity: 0;
+  transition: opacity 0.8s ease;
+
+  pointer-events: none;
+  z-index: 5;
+}
+
+#journey-message.visible {
+  opacity: 1;
+}
+
+
+/* ===== INTERACTIVE CONVERSATIONS ===== */
+
+#conversation-box {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+
+  width: min(88%, 680px);
+  padding: 20px 24px 16px;
+
+  background: #F5EEE7;
+  color: #493D3B;
+
+  border: 3px solid #D99AAF;
+  outline: 1px dashed #A5B6A0;
+  outline-offset: 5px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+
+  z-index: 20;
+}
+
+#conversation-speaker {
+  margin-bottom: 10px;
+
+  color: #BF8298;
+  font-size: clamp(15px, 2.5vw, 19px);
+  font-weight: bold;
+  font-style: italic;
+}
+
+#conversation-text {
+  min-height: 48px;
+
+  color: #493D3B;
+  font-size: clamp(16px, 2.7vw, 21px);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+#dialogue-button {
+  display: block;
+  margin: 14px 0 0 auto;
+
+  padding: 10px 22px;
+
+  border: 2px solid #E4AEC0;
+  border-radius: 10px;
+
+  background: #C17F99;
+  color: #F5EEE7;
+
+  font-family: Georgia, serif;
+  font-size: 16px;
+}
+
+#dialogue-button:hover {
+  background: #A96F86;
+}
+
+
+/* ===== BOUQUET COUNTER ===== */
+
+#bouquet-counter {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  color: #fff0f7;
+  background: rgba(45, 53, 48, 0.55);
+
+  border: 1px solid rgba(255, 217, 239, 0.35);
+  border-radius: 14px;
+
+  font-size: 20px;
+  z-index: 6;
+}
+
+.bouquet-icon {
+  font-size: 24px;
+}
+
+#bouquet-counter.collecting {
+  animation: bouquet-bounce 0.45s ease;
+}
+
+@keyframes bouquet-bounce {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 217, 239, 0);
+  }
+
+  35% {
+    transform: scale(1.12);
+    box-shadow: 0 0 16px rgba(255, 217, 239, 0.65);
+  }
+
+  65% {
+    transform: scale(0.97);
+    box-shadow: 0 0 10px rgba(255, 217, 239, 0.35);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 217, 239, 0);
+  }
+}
+
+
+/* ===== MOVEMENT CONTROLS ===== */
+
+#controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  padding: 0 20px;
+
+  z-index: 10;
+  pointer-events: none;
+}
+
+.movement-controls {
+  display: flex;
+  gap: 12px;
+}
+
+#controls button {
+  width: 58px;
+  height: 58px;
+  padding: 0;
+
+  background: rgba(100, 100, 100, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  font-size: 22px;
+  pointer-events: auto;
+}
+
+#jump {
+  margin-left: auto;
+}
+
+
+/* ===== LOVE LETTER ENDING ===== */
+
+#ending-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: auto;
+  padding: 30px 20px;
+
+  background-color: #34463D;
+  background-image:
+    radial-gradient(
+      circle at 15% 20%,
+      #625263 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      #46594A 0%,
+      transparent 45%
+    );
+
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+#ending-screen.visible {
+  opacity: 1;
+}
+
+#ending-content {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 90%;
+  max-width: 650px;
+  max-height: 82vh;
+
+  padding: 35px;
+
+  overflow: hidden;
+
+  background: #F5EEE7;
+  color: #493D3B;
+
+  border: 2px solid #D9A0B2;
+  outline: 1px dashed #A5B6A0;
+  outline-offset: 7px;
+
+  box-shadow:
+    0 10px 30px #00000030,
+    5px 5px 0 #625263;
+
+  text-align: center;
+  font-family: Georgia, serif;
+
+  transform: rotate(-0.5deg);
+}
+
+#ending-content::before {
+  content: "♡";
+  position: absolute;
+  top: 12px;
+  right: 17px;
+
+  font-size: 30px;
+  color: #D9A0B2;
+}
+
+#ending-content h1 {
+  flex-shrink: 0;
+
+  margin: 0 0 20px;
+
+  color: #BF8298;
+  font-size: clamp(30px, 6vw, 46px);
+  font-weight: normal;
+  font-style: italic;
+}
+
+#ending-message {
+  min-height: 0;
+  max-height: 55vh;
+  overflow-y: auto;
+
+  padding: 4px 10px 4px 2px;
+
+  color: #493D3B;
+  font-family: Georgia, serif;
+  font-size: clamp(16px, 3vw, 21px);
+  line-height: 1.9;
+
+  text-align: left;
+  white-space: pre-line;
+
+  scroll-behavior: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+#ending-signature {
+  flex-shrink: 0;
+
+  margin-top: 24px;
+  padding-top: 4px;
+
+  color: #BF8298;
+  font-family: Georgia, serif;
+  font-style: italic;
+  text-align: right;
+}
+
+#ending-content::after {
+  content: "୨୧  ♡  ୨୧";
+  display: block;
+  flex-shrink: 0;
+
+  margin-top: 20px;
+
+  color: #BF8298;
+  font-size: 23px;
+  letter-spacing: 5px;
+}
+
+
+/* ===== LETTER SCROLLBAR ===== */
+
+#ending-message::-webkit-scrollbar {
+  width: 6px;
+}
+
+#ending-message::-webkit-scrollbar-track {
+  background: #E8DDD6;
+  border-radius: 10px;
+}
+
+#ending-message::-webkit-scrollbar-thumb {
+  background: #BF8298;
+  border-radius: 10px;
+}
+
+
+/* ===== FULLSCREEN ===== */
+
+#game:fullscreen {
+  width: 100%;
+  height: 100%;
+  background: #18201d;
+}
+
+#game:fullscreen #play-screen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+#game:fullscreen #world {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: fill;
+}
+
+#game:fullscreen #controls {
+  bottom: 20px;
+}
+
+
+/* ===== SMALL SCREENS ===== */
+
+@media (max-width: 500px) {
+  #ending-content {
+    padding: 35px 23px;
+  }
+}
+
+
+/* ===== LANDSCAPE ===== */
+
+@media (orientation: landscape) {
+  #play-screen {
+    min-height: 100vh;
+  }
+
+  #ending-screen {
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  #ending-content {
+    width: 90%;
+    max-width: 700px;
+    max-height: calc(100vh - 24px);
+
+    padding: 18px 28px;
+    transform: none;
+  }
+
+  #ending-content h1 {
+    font-size: clamp(24px, 4vw, 34px);
+    margin-bottom: 10px;
+  }
+
+  #ending-message {
+    max-height: 42vh;
+    font-size: clamp(14px, 2vw, 17px);
+    line-height: 1.5;
+  }
+
+  #ending-signature {
+    margin-top: 10px;
+  }
+
+  #ending-content::after {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  #conversation-box {
+    bottom: 5%;
+    padding: 14px 20px 12px;
+  }
+
+  #conversation-text {
+    min-height: 36px;
+  }
+}

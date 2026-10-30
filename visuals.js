@@ -20,10 +20,10 @@ const characterImage = loadImage("assets/character.png");
 const secondLoverImage = loadImage("assets/2ndlover.png");
 
 const walkFrames = [
-  loadImage("assets/walk1.png"),
-  loadImage("assets/walk2.png"),
-  loadImage("assets/walk3.png"),
-  loadImage("assets/walk4.png")
+  loadImage("walk1.png"),
+  loadImage("walk2.png"),
+  loadImage("walk3.png"),
+  loadImage("walk4.png")
 ];
 
 const sprintFrames = [
@@ -34,7 +34,7 @@ const sprintFrames = [
 ];
 
 const flowerImage = loadImage("assets/flower.png");
-const backgroundImage = loadImage("assets/background.png");
+const backgroundImage = loadImage("background.png");
 
 
 // ========================================

@@ -16,8 +16,8 @@ function loadImage(src) {
 
 // CHARACTER IMAGES
 
-const characterImage = loadImage("assets/character.png");
-const secondLoverImage = loadImage("assets/2ndlover.png");
+const characterImage = loadImage("character.png");
+const secondLoverImage = loadImage("2ndlover.png");
 
 const walkFrames = [
   loadImage("walk1.png"),
